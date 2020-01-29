@@ -1,0 +1,12 @@
+{
+  "name": "jwt-bch-lib",
+  "version": "1.0.0",
+  "description": "A node.js library managing API access to bch-api and fullstack.cash",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo no tests yet",
+    "start": "node index.js"
+  },
+  "author": "Chris Troutner <chris.troutner@gmail.com>",
+  "license": "MIT"
+}
