@@ -4,9 +4,29 @@
   "description": "A node.js library managing API access to bch-api and fullstack.cash",
   "main": "index.js",
   "scripts": {
-    "test": "echo no tests yet",
-    "start": "node index.js"
+    "test": "npm run lint && nyc mocha --timeout 15000 test/unit/",
+    "start": "node index.js",
+    "lint": "standard --env mocha --fix",
+    "integration": "npm run lint && mocha --timeout 25000 test/integration/"
   },
   "author": "Chris Troutner <chris.troutner@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": "Permissionless-Software-Foundation/jwt-bch-lib",
+  "dependencies": {
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.9",
+    "eslint": "5.16.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^7.0.1",
+    "semantic-release": "^17.0.2",
+    "sinon": "^8.1.1",
+    "standard": "^14.3.1"
+  }
 }
