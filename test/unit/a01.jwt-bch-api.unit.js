@@ -13,12 +13,70 @@ const config = {
 }
 
 const JwtLib = require('../../src/jwt-bch-api')
-const uut = new JwtLib(config)
 
 describe('#jwt-bch-api.js', () => {
   let sandbox
-  beforeEach(() => (sandbox = sinon.createSandbox()))
+  let uut
+
+  beforeEach(() => {
+    sandbox = sinon.createSandbox()
+    uut = new JwtLib(config)
+  })
+
   afterEach(() => sandbox.restore())
+
+  describe('#constructor', () => {
+    it('should throw error for undefined input', () => {
+      try {
+        const newUut = new JwtLib()
+
+        // Prevent linting errors.
+        console.log('newUut: ', newUut)
+
+        // Code should not get to this point as a error is expected to be thrown.
+        assert.equal(true, false, 'Unexpected result')
+      } catch (err) {
+        // console.log('err: ', err)
+        // console.log(err.message)
+        assert.include(err.message, 'Cannot read property')
+      }
+    })
+
+    it('should throw error if login is not included', () => {
+      try {
+        const newUut = new JwtLib({})
+
+        // Prevent linting errors.
+        console.log('newUut: ', newUut)
+
+        // Code should not get to this point as a error is expected to be thrown.
+        assert.equal(true, false, 'Unexpected result')
+      } catch (err) {
+        assert.include(err.message, 'No login email provided.')
+      }
+    })
+
+    it('should throw error if password is not included', () => {
+      try {
+        const newUut = new JwtLib({ login: 'test' })
+
+        // Prevent linting errors.
+        console.log('newUut: ', newUut)
+
+        // Code should not get to this point as a error is expected to be thrown.
+        assert.equal(true, false, 'Unexpected result')
+      } catch (err) {
+        assert.include(err.message, 'No password provided.')
+      }
+    })
+
+    it('should instantiate with proper config input', () => {
+      const newUut = new JwtLib(config)
+
+      assert.property(newUut, 'login')
+      assert.property(newUut, 'password')
+    })
+  })
 
   describe('#login', () => {
     it('should log in', async () => {
@@ -45,6 +103,15 @@ describe('#jwt-bch-api.js', () => {
       assert.property(userData, 'bchAddr')
       assert.property(userData, 'accessToken')
       assert.property(userData, 'apiToken')
+    })
+
+    it('should handle errors thrown by axios', async () => {
+      try {
+        sandbox.stub(uut.axios, 'request').throws({ code: 'ECONNABORTED' })
+        await uut.register()
+      } catch (err) {
+        assert.property(err, 'code')
+      }
     })
   })
 })

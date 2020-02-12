@@ -12,31 +12,36 @@ let _this
 
 class JwtBchApi {
   constructor (config) {
-    _this = this
-    this.userData = {
-      hasRegistered: false
-    }
+    try {
+      _this = this
+      this.userData = {
+        hasRegistered: false
+      }
 
-    if (!config.login) {
-      throw new Error(
-        'No login email provided. You must initialize jwt-bch-api with login for fullstack.cash.'
-      )
-    }
-    _this.login = config.login
+      if (!config.login) {
+        throw new Error(
+          'No login email provided. You must initialize jwt-bch-api with login for fullstack.cash.'
+        )
+      }
+      _this.login = config.login
 
-    if (!config.login) {
-      throw new Error(
-        'No password provided. You must initialize jwt-bch-api with login for fullstack.cash.'
-      )
-    }
-    _this.password = config.password
+      if (!config.password) {
+        throw new Error(
+          'No password provided. You must initialize jwt-bch-api with login for fullstack.cash.'
+        )
+      }
+      _this.password = config.password
 
-    this.axios = axios
+      this.axios = axios
 
-    // Axios Option template.
-    this.axiosOptions = {
-      timeout: 15000,
-      responseType: 'json'
+      // Axios Option template.
+      this.axiosOptions = {
+        timeout: 15000,
+        responseType: 'json'
+      }
+    } catch (err) {
+      console.error('Error in jwt-bch-api.js/constructor()')
+      throw err
     }
   }
 
