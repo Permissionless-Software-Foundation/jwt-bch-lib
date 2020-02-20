@@ -20,6 +20,7 @@ describe('#jwt-bch-api.js', () => {
       console.log(`result: ${result}`)
 
       const userData = uut.userData
+      console.log(`userData: ${JSON.stringify(userData, null, 2)}`)
 
       // Verify the hasRegistered flag gets set.
       assert.property(userData, 'hasRegistered')
