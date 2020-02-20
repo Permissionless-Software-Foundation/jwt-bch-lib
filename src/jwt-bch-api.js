@@ -77,7 +77,58 @@ class JwtBchApi {
 
       return true
     } catch (err) {
-      console.error('Error in jwt-bch-api.js/login()')
+      console.error('Error in jwt-bch-api.js/register()')
+      throw err
+    }
+  }
+
+  // Request a new API token for the specified API access tier.
+  async getApiToken (apiLevel) {
+    try {
+      const options = this.axiosOptions
+      options.method = 'post'
+      options.url = `${config.SERVER}/apitoken/new`
+      options.data = {
+        apiLevel: apiLevel
+      }
+      options.headers = {
+        Authorization: `Bearer ${_this.userData.accessToken}`
+      }
+
+      const result = await _this.axios.request(options)
+      // console.log(`result.data: ${JSON.stringify(result.data, null, 2)}`)
+
+      // Update the state.
+      _this.userData.apiLevel = result.data.apiLevel
+      _this.userData.apiToken = result.data.apiToken
+
+      return result.data
+    } catch (err) {
+      console.error('Error in jwt-bch-api.js/getApiToken()')
+      throw err
+    }
+  }
+
+  // Ask the Auth server to validate the API token and determine if it's still
+  // valid, or if it has expired or been invalidated for some other reason.
+  async validateApiToken () {
+    try {
+      const options = this.axiosOptions
+      options.method = 'post'
+      options.url = `${config.SERVER}/apitoken/isvalid`
+      options.data = {
+        token: _this.userData.apiToken
+      }
+      options.headers = {
+        Authorization: `Bearer ${_this.userData.accessToken}`
+      }
+
+      const result = await _this.axios.request(options)
+      // console.log(`result.data: ${JSON.stringify(result.data, null, 2)}`)
+
+      return result.data
+    } catch (err) {
+      console.error('Error in jwt-bch-api.js/validateApiToken()')
       throw err
     }
   }
