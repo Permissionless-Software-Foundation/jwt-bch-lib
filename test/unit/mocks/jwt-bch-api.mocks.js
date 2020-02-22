@@ -17,6 +17,18 @@ const userData = {
   }
 }
 
+const freeTier = {
+  apiToken: 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNGVkNzMwOTRkMzRhNmMyYzE1NDE3NCIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImFwaUxldmVsIjowLCJyYXRlTGltaXQiOjMsImlhdCI6MTU4MjMzMDU2MCwiZXhwIjoxNTg0OTIyNTYwfQ.kLvGeXOZ28f3ZuRCMWYYYRNZG_FlKx2UoTQaBD8NY0R1si7AObk5I2Vh0FL0Bs8ks6Q9h111Jf00NZ2fGuxUgA',
+  apiLevel: 0
+}
+
+const validate = {
+  isValid: true,
+  apiLevel: 0
+}
+
 module.exports = {
-  userData
+  userData,
+  freeTier,
+  validate
 }
