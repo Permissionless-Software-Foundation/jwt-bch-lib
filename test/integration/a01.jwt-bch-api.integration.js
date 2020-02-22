@@ -37,7 +37,7 @@ describe('#jwt-bch-api.js', () => {
   })
 
   describe('#getApiToken', () => {
-    it('should get a new API token', async () => {
+    it('should get a new free-tier API token', async () => {
       const result = await uut.getApiToken(0)
 
       assert.property(result, 'apiToken')
@@ -45,6 +45,17 @@ describe('#jwt-bch-api.js', () => {
 
       assert.property(result, 'apiLevel')
       assert.equal(result.apiLevel, 0)
+    })
+
+    it('should throw a 402 error for paid-tier and no balance', async () => {
+      try {
+        await uut.getApiToken(10)
+      } catch (err) {
+        // console.log('err.response: ', err.response)
+
+        assert.equal(err.response.status, 402)
+        assert.include(err.response.data, 'Not enough credit')
+      }
     })
   })
 

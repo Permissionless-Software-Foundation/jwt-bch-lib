@@ -78,8 +78,8 @@ describe('#jwt-bch-api.js', () => {
     })
   })
 
-  describe('#login', () => {
-    it('should log in', async () => {
+  describe('#register', () => {
+    it('should log in and retrieve user data', async () => {
       // Mock network calls.
       sandbox.stub(uut.axios, 'request').resolves({ data: mockData.userData })
 
@@ -109,6 +109,65 @@ describe('#jwt-bch-api.js', () => {
       try {
         sandbox.stub(uut.axios, 'request').throws({ code: 'ECONNABORTED' })
         await uut.register()
+      } catch (err) {
+        assert.property(err, 'code')
+      }
+    })
+  })
+
+  describe('#getApiToken', () => {
+    it('should throw error for non-integer apiLevel', async () => {
+      try {
+        await uut.getApiToken('abc')
+
+        assert.equal(true, false, 'unexpected result')
+      } catch (err) {
+        // console.log('err: ', err)
+        assert.include(err.message, 'apiLevel must be a positive integer')
+      }
+    })
+
+    it('should get a new free-tier API token', async () => {
+      // Mock network calls.
+      sandbox.stub(uut.axios, 'request').resolves({ data: mockData.freeTier })
+
+      const result = await uut.getApiToken(0)
+
+      assert.property(result, 'apiToken')
+      assert.isString(result.apiToken)
+
+      assert.property(result, 'apiLevel')
+      assert.equal(result.apiLevel, 0)
+    })
+
+    it('should handle errors thrown by axios', async () => {
+      try {
+        sandbox.stub(uut.axios, 'request').throws({ code: 'ECONNABORTED' })
+        await uut.getApiToken(0)
+      } catch (err) {
+        assert.property(err, 'code')
+      }
+    })
+  })
+
+  describe('#validateApiToken', () => {
+    it('should validate API Token', async () => {
+      // Mock network calls.
+      sandbox.stub(uut.axios, 'request').resolves({ data: mockData.validate })
+
+      const result = await uut.validateApiToken()
+
+      assert.property(result, 'isValid')
+      assert.equal(result.isValid, true)
+
+      assert.property(result, 'apiLevel')
+      assert.equal(result.apiLevel, 0)
+    })
+
+    it('should handle errors thrown by axios', async () => {
+      try {
+        sandbox.stub(uut.axios, 'request').throws({ code: 'ECONNABORTED' })
+        await uut.validateApiToken()
       } catch (err) {
         assert.property(err, 'code')
       }

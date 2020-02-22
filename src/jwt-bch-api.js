@@ -85,6 +85,10 @@ class JwtBchApi {
   // Request a new API token for the specified API access tier.
   async getApiToken (apiLevel) {
     try {
+      if (isNaN(Number(apiLevel))) {
+        throw new Error('apiLevel must be a positive integer.')
+      }
+
       const options = this.axiosOptions
       options.method = 'post'
       options.url = `${config.SERVER}/apitoken/new`
