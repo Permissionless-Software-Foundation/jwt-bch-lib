@@ -70,4 +70,13 @@ describe('#jwt-bch-api.js', () => {
       assert.equal(result.apiLevel, 0)
     })
   })
+
+  describe('#updateCredit', () => {
+    it('should check for balance', async () => {
+      const result = await uut.updateCredit()
+      // console.log(`result: ${JSON.stringify(result, null, 2)}`)
+
+      assert.equal(result, 0)
+    })
+  })
 })
