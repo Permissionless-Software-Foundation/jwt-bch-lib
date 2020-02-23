@@ -173,4 +173,11 @@ describe('#jwt-bch-api.js', () => {
       }
     })
   })
+
+  describe('#getBchAddr', () => {
+    it('should get user addr', () => {
+      const result = uut.getBchAddr()
+      console.log(`BCH Address: ${result}`)
+    })
+  })
 })

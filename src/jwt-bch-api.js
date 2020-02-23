@@ -46,6 +46,7 @@ class JwtBchApi {
   }
 
   // register with the JWT server by logging in, populate the userData.
+  // This must be called before any of the other methods in this library.
   async register () {
     try {
       const options = this.axiosOptions
@@ -135,6 +136,11 @@ class JwtBchApi {
       console.error('Error in jwt-bch-api.js/validateApiToken()')
       throw err
     }
+  }
+
+  // Return the BCH address associated with the registered user.
+  getBchAddr () {
+    return _this.userData.bchAddr
   }
 }
 
