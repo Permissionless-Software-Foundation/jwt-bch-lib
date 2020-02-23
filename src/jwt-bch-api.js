@@ -142,6 +142,29 @@ class JwtBchApi {
   getBchAddr () {
     return _this.userData.bchAddr
   }
+
+  // Ask the server to check the assigned BCH address and update credit.
+  async updateCredit () {
+    try {
+      const options = this.axiosOptions
+      options.method = 'get'
+      options.url = `${config.SERVER}/apitoken/update-credit/${_this.userData.userId}`
+      // options.data = {
+      //   token: _this.userData.apiToken
+      // }
+      options.headers = {
+        Authorization: `Bearer ${_this.userData.accessToken}`
+      }
+
+      const result = await _this.axios.request(options)
+      // console.log(`result.data: ${JSON.stringify(result.data, null, 2)}`)
+
+      return result.data
+    } catch (err) {
+      console.error('Error in jwt-bch-api.js/updateCredit()')
+      throw err
+    }
+  }
 }
 
 module.exports = JwtBchApi

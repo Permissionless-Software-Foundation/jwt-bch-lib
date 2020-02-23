@@ -180,4 +180,25 @@ describe('#jwt-bch-api.js', () => {
       console.log(`BCH Address: ${result}`)
     })
   })
+
+  describe('#updateCredit', () => {
+    it('should return the user credit', async () => {
+      // Mock network calls.
+      sandbox.stub(uut.axios, 'request').resolves({ data: 0 })
+
+      const result = await uut.updateCredit()
+      // console.log(`result: ${JSON.stringify(result, null, 2)}`)
+
+      assert.equal(result, 0)
+    })
+
+    it('should handle errors thrown by axios', async () => {
+      try {
+        sandbox.stub(uut.axios, 'request').throws({ code: 'ECONNABORTED' })
+        await uut.updateCredit()
+      } catch (err) {
+        assert.property(err, 'code')
+      }
+    })
+  })
 })
