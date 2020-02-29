@@ -5,4 +5,6 @@
 
 'use strict'
 
-console.log('hello world')
+const FullStack = require('./src/jwt-bch-api')
+
+module.exports = FullStack
