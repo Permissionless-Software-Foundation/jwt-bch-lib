@@ -45,7 +45,7 @@ class JwtBchApi {
     try {
       const options = _this.axiosOptions
       options.method = 'post'
-      options.url = `${_this.SERVER}/auth`
+      options.url = `${_this.server}/auth`
       options.data = {
         email: _this.login,
         password: _this.password
@@ -86,7 +86,7 @@ class JwtBchApi {
 
       const options = this.axiosOptions
       options.method = 'post'
-      options.url = `${_this.SERVER}/apitoken/new`
+      options.url = `${_this.server}/apitoken/new`
       options.data = {
         apiLevel: apiLevel
       }
@@ -114,7 +114,7 @@ class JwtBchApi {
     try {
       const options = this.axiosOptions
       options.method = 'post'
-      options.url = `${_this.SERVER}/apitoken/isvalid`
+      options.url = `${_this.server}/apitoken/isvalid`
       options.data = {
         token: _this.userData.apiToken
       }
@@ -142,7 +142,7 @@ class JwtBchApi {
     try {
       const options = this.axiosOptions
       options.method = 'get'
-      options.url = `${_this.SERVER}/apitoken/update-credit/${_this.userData.userId}`
+      options.url = `${_this.server}/apitoken/update-credit/${_this.userData.userId}`
       // options.data = {
       //   token: _this.userData.apiToken
       // }

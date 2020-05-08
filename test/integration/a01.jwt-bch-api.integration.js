@@ -4,15 +4,10 @@
 
 const assert = require('chai').assert
 
-const config = {
-  login: 'test@test.com',
-  password: 'test'
-}
+const JwtLib = require('../../src/jwt-bch-lib')
+const uut = new JwtLib()
 
-const JwtLib = require('../../src/jwt-bch-api')
-const uut = new JwtLib(config)
-
-describe('#jwt-bch-api.js', () => {
+describe('#jwt-bch-lib.js', () => {
   describe('#register', () => {
     it('should log in', async () => {
       // Log into the Auth server.
@@ -67,7 +62,7 @@ describe('#jwt-bch-api.js', () => {
       assert.equal(result.isValid, true)
 
       assert.property(result, 'apiLevel')
-      assert.equal(result.apiLevel, 0)
+      assert.equal(result.apiLevel, 10)
     })
   })
 
