@@ -7,74 +7,52 @@ const sinon = require('sinon')
 
 const mockData = require('./mocks/jwt-bch-api.mocks')
 
-const config = {
-  login: 'test@test.com',
-  password: 'test'
-}
+const JwtLib = require('../../src/jwt-bch-lib')
 
-const JwtLib = require('../../src/jwt-bch-api')
-
-describe('#jwt-bch-api.js', () => {
+describe('#jwt-bch-lib.js', () => {
   let sandbox
   let uut
 
   beforeEach(() => {
     sandbox = sinon.createSandbox()
-    uut = new JwtLib(config)
+    uut = new JwtLib()
   })
 
   afterEach(() => sandbox.restore())
 
   describe('#constructor', () => {
-    it('should throw error for undefined input', () => {
-      try {
-        const newUut = new JwtLib()
+    it('should instantiate with default values.', () => {
+      const newUut = new JwtLib()
+      // console.log('newUut: ', newUut)
 
-        // Prevent linting errors.
-        console.log('newUut: ', newUut)
-
-        // Code should not get to this point as a error is expected to be thrown.
-        assert.equal(true, false, 'Unexpected result')
-      } catch (err) {
-        // console.log('err: ', err)
-        // console.log(err.message)
-        assert.include(err.message, 'Cannot read property')
-      }
-    })
-
-    it('should throw error if login is not included', () => {
-      try {
-        const newUut = new JwtLib({})
-
-        // Prevent linting errors.
-        console.log('newUut: ', newUut)
-
-        // Code should not get to this point as a error is expected to be thrown.
-        assert.equal(true, false, 'Unexpected result')
-      } catch (err) {
-        assert.include(err.message, 'No login email provided.')
-      }
-    })
-
-    it('should throw error if password is not included', () => {
-      try {
-        const newUut = new JwtLib({ login: 'test' })
-
-        // Prevent linting errors.
-        console.log('newUut: ', newUut)
-
-        // Code should not get to this point as a error is expected to be thrown.
-        assert.equal(true, false, 'Unexpected result')
-      } catch (err) {
-        assert.include(err.message, 'No password provided.')
-      }
-    })
-
-    it('should instantiate with proper config input', () => {
-      const newUut = new JwtLib(config)
+      assert.property(newUut, 'server')
+      assert.equal(newUut.server, 'https://auth.fullstack.cash')
 
       assert.property(newUut, 'login')
+      assert.equal(newUut.login, 'demo@demo.com')
+
       assert.property(newUut, 'password')
+      assert.equal(newUut.password, 'demo')
+    })
+
+    it('should overwrite values when included with config', () => {
+      const config = {
+        login: 'testlogin',
+        password: 'testpass',
+        server: 'myserver'
+      }
+
+      const newUut = new JwtLib(config)
+      // console.log('newUut: ', newUut)
+
+      assert.property(newUut, 'server')
+      assert.equal(newUut.server, 'myserver')
+
+      assert.property(newUut, 'login')
+      assert.equal(newUut.login, 'testlogin')
+
+      assert.property(newUut, 'password')
+      assert.equal(newUut.password, 'testpass')
     })
   })
 
