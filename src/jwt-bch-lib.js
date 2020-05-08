@@ -6,42 +6,36 @@
 'use strict'
 
 const axios = require('axios')
-const config = require('../config')
 
 let _this
 
 class JwtBchApi {
   constructor (config) {
-    try {
-      _this = this
-      this.userData = {
-        hasRegistered: false
-      }
+    _this = this // Private, global pointer to instance of this Class.
 
-      if (!config.login) {
-        throw new Error(
-          'No login email provided. You must initialize jwt-bch-api with login for fullstack.cash.'
-        )
-      }
-      _this.login = config.login
+    // Encapsulate axios.
+    this.axios = axios
+    this.axiosOptions = {
+      timeout: 15000,
+      responseType: 'json'
+    }
 
-      if (!config.password) {
-        throw new Error(
-          'No password provided. You must initialize jwt-bch-api with login for fullstack.cash.'
-        )
-      }
-      _this.password = config.password
+    this.userData = {
+      hasRegistered: false
+    }
 
-      this.axios = axios
+    if (!config) {
+      _this.server = 'https://auth.fullstack.cash'
+      _this.login = 'demo@demo.com'
+      _this.password = 'demo'
+    } else {
+      // Default to auth.fullstack.cash.
+      // _this.SERVER = config.SERVER ? config.SERVER : 'https://auth.fullstack.cash'
+      _this.server = config.server ? config.server : 'https://auth.fullstack.cash'
 
-      // Axios Option template.
-      this.axiosOptions = {
-        timeout: 15000,
-        responseType: 'json'
-      }
-    } catch (err) {
-      console.error('Error in jwt-bch-api.js/constructor()')
-      throw err
+      // Default login to demo account.
+      _this.login = config.login ? config.login : 'demo@demo.com'
+      _this.password = config.password ? config.password : 'demo'
     }
   }
 
@@ -49,9 +43,9 @@ class JwtBchApi {
   // This must be called before any of the other methods in this library.
   async register () {
     try {
-      const options = this.axiosOptions
+      const options = _this.axiosOptions
       options.method = 'post'
-      options.url = `${config.SERVER}/auth`
+      options.url = `${_this.SERVER}/auth`
       options.data = {
         email: _this.login,
         password: _this.password
@@ -78,7 +72,7 @@ class JwtBchApi {
 
       return true
     } catch (err) {
-      console.error('Error in jwt-bch-api.js/register()')
+      console.error('Error in jwt-bch-lib.js/register()')
       throw err
     }
   }
@@ -92,7 +86,7 @@ class JwtBchApi {
 
       const options = this.axiosOptions
       options.method = 'post'
-      options.url = `${config.SERVER}/apitoken/new`
+      options.url = `${_this.SERVER}/apitoken/new`
       options.data = {
         apiLevel: apiLevel
       }
@@ -109,7 +103,7 @@ class JwtBchApi {
 
       return result.data
     } catch (err) {
-      console.error('Error in jwt-bch-api.js/getApiToken()')
+      console.error('Error in jwt-bch-lib.js/getApiToken()')
       throw err
     }
   }
@@ -120,7 +114,7 @@ class JwtBchApi {
     try {
       const options = this.axiosOptions
       options.method = 'post'
-      options.url = `${config.SERVER}/apitoken/isvalid`
+      options.url = `${_this.SERVER}/apitoken/isvalid`
       options.data = {
         token: _this.userData.apiToken
       }
@@ -133,7 +127,7 @@ class JwtBchApi {
 
       return result.data
     } catch (err) {
-      console.error('Error in jwt-bch-api.js/validateApiToken()')
+      console.error('Error in jwt-bch-lib.js/validateApiToken()')
       throw err
     }
   }
@@ -148,7 +142,7 @@ class JwtBchApi {
     try {
       const options = this.axiosOptions
       options.method = 'get'
-      options.url = `${config.SERVER}/apitoken/update-credit/${_this.userData.userId}`
+      options.url = `${_this.SERVER}/apitoken/update-credit/${_this.userData.userId}`
       // options.data = {
       //   token: _this.userData.apiToken
       // }
@@ -161,7 +155,7 @@ class JwtBchApi {
 
       return result.data
     } catch (err) {
-      console.error('Error in jwt-bch-api.js/updateCredit()')
+      console.error('Error in jwt-bch-lib.js/updateCredit()')
       throw err
     }
   }
