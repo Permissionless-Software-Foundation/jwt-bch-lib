@@ -10,6 +10,14 @@ const axios = require('axios')
 let _this
 
 class JwtBchApi {
+  /**
+   * @api JwtBchApi.constructor() constructor() - Instantiate the jwt-bch-api library.
+   * @apiName JwtBchApi constructor
+   * @apiGroup JwtBchApi
+   * @apiDescription Instantiate the jwt-bch-api library. Expects an config object
+   * with the following properties.
+   *
+   */
   constructor (config) {
     _this = this // Private, global pointer to instance of this Class.
 
