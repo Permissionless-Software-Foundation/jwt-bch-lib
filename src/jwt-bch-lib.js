@@ -17,6 +17,13 @@ class JwtBchApi {
    * @apiDescription Instantiate the jwt-bch-api library. Expects an config object
    * with the following properties.
    *
+   * @apiExample Example usage:
+   * const JwtLib = require('jwt-bch-lib')
+   * const jwtLib = new JwtLib({
+   *   server: 'https://auth.fullstack.cash',
+   *   login: 'demo@demo.com',
+   *   password: 'demo'
+   * })
    */
   constructor (config) {
     _this = this // Private, global pointer to instance of this Class.
@@ -46,6 +53,30 @@ class JwtBchApi {
       _this.password = config.password ? config.password : 'demo'
     }
   }
+
+  /**
+   * @api JwtBchApi.register()  - Register with the JWT server.
+   * @apiName JwtBchApi register
+   * @apiGroup JwtBchApi
+   * @apiDescription Register with the JWT server by logging in, populate the userData..
+   * This must be called before any of the other methods in this library.
+   *
+   * @apiExample Example usage:
+   *
+   * (async () => {
+   *   try {
+   *
+   *    const isRegistered = await jwtLib.register()
+   *    console.log(isRegistered);
+   *
+   *   }catch(err){
+   *      throw err
+   *   }
+   * })()
+   *
+   * @apiSuccessExample {json} Success-Response:
+   *  true
+   */
 
   // register with the JWT server by logging in, populate the userData.
   // This must be called before any of the other methods in this library.
@@ -85,6 +116,35 @@ class JwtBchApi {
     }
   }
 
+  /**
+   * @api JwtBchApi.getApiToken()  - Request a new API token.
+   * @apiName  JwtBchApi getApiToken
+   * @apiGroup JwtBchApi
+   * @apiDescription Request a new API token for the specified API access tier.
+   *
+   * @apiExample Example usage:
+   *
+   *
+   * (async () => {
+   *    try {
+   *
+   *       await jwtLib.register()
+   *       const apiToken = await jwtLib.getApiToken(jwtLib.userData.apiLevel)
+   *       console.log(apiToken)
+   *    }catch(err){
+   *     throw err
+   *    }
+   * })()
+   *
+   *
+   *@apiSuccessExample {json} Success-Response:
+   * {
+   *   apiToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlODhhY2YyMDIyMWMxMDAxMmFkOTQwMSIsImVtYWlsIjoiZGVtb0BkZW1vLmNvbSIsImFwaUxldmVsIjoxMCwicmF0ZUxpbWl0IjozLCJpYXQiOjE1OTAxMDE1ODEsImV4cCI6MTU5MjY5MzU4MX0.-YXtMFoLn8W7fCSaZS6Mrk9l9RIPyc-MY8jm0lPI_CE',
+   *   apiTokenExp: '2020-06-20T22:53:01.000Z',
+   *   apiLevel: 10
+   * }
+   */
+
   // Request a new API token for the specified API access tier.
   async getApiToken (apiLevel) {
     try {
@@ -116,6 +176,34 @@ class JwtBchApi {
     }
   }
 
+  /**
+   * @api JwtBchApi.validateApiToken()  - Request a new API token.
+   * @apiName  JwtBchApi getApiToken
+   * @apiGroup JwtBchApi
+   * @apiDescription  Ask the Auth server to validate the API token and determine if it's still
+   * valid, or if it has expired or been invalidated for some other reason.
+   *
+   * @apiExample Example usage:
+   *
+   * (async () => {
+   *    try {
+   *
+   *       await jwtLib.register()
+   *       const isValid = await jwtLib.validateApiToken()
+   *       console.log(isValid)
+   *    }catch(err){
+   *     throw err
+   *    }
+   * })()
+   *
+   * @apiSuccessExample {json} Success-Response:
+   * {
+   *   isValid: true,
+   *   apiLevel: 0
+   * }
+   *
+   */
+
   // Ask the Auth server to validate the API token and determine if it's still
   // valid, or if it has expired or been invalidated for some other reason.
   async validateApiToken () {
@@ -140,11 +228,59 @@ class JwtBchApi {
     }
   }
 
+  /**
+   * @api JwtBchApi.getBchAddr()  - Return the BCH address.
+   * @apiName  JwtBchApi getBchAddr
+   * @apiGroup JwtBchApi
+   * @apiDescription Return the BCH address associated with the registered user.
+   *
+   * @apiExample Example usage:
+   *
+   * (async () => {
+   *    try {
+   *
+   *       await jwtLib.register()
+   *       const bchAddr = await jwtLib.getBchAddr()
+   *       console.log(bchAddr)
+   *    }catch(err){
+   *     throw err
+   *    }
+   * })()
+   *
+   * @apiSuccessExample {json} Success-Response:
+   *
+   * bitcoincash:qq35gzcfm2t34d6uj93tkqh3u7nv43gawcv4l3rk7s
+   *
+   */
   // Return the BCH address associated with the registered user.
   getBchAddr () {
     return _this.userData.bchAddr
   }
 
+  /**
+   * @api JwtBchApi.updateCredit()  - Update credit.
+   * @apiName  JwtBchApi updateCredit
+   * @apiGroup JwtBchApi
+   * @apiDescription Ask the server to check the assigned BCH address and update credit..
+   *
+   * @apiExample Example usage:
+   *
+   *
+   * (async () => {
+   *    try {
+   *
+   *       await jwtLib.register()
+   *       const bchAddr = await jwtLib.getBchAddr()
+   *       console.log(bchAddr)
+   *    }catch(err){
+   *     throw err
+   *    }
+   * })()
+   *
+   * @apiSuccessExample {json} Success-Response:
+   * 0
+   *
+   */
   // Ask the server to check the assigned BCH address and update credit.
   async updateCredit () {
     try {
