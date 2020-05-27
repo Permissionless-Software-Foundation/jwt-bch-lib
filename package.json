@@ -10,7 +10,7 @@
     "test:integration": "npm run lint && mocha --timeout 25000 test/integration/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coverage:report": "nyc --reporter=html mocha --timeout 15000 test/unit/",
-    "docs": "./node_modules/.bin/apidoc -i src/ -o docs"
+    "docs": "./node_modules/.bin/apidoc -i src/ -o docs-out && rm -R docs && mkdir docs && apidoc-markdown -p docs-out -o docs/APIDOC.md && rm -R docs-out"
   },
   "author": "Chris Troutner <chris.troutner@gmail.com>",
   "license": "MIT",
@@ -19,7 +19,9 @@
     "axios": "^0.19.2"
   },
   "devDependencies": {
+    "-": "0.0.1",
     "apidoc": "^0.22.1",
+    "apidoc-markdown": "^5.1.1",
     "chai": "^4.2.0",
     "coveralls": "^3.0.9",
     "eslint": "5.16.0",
@@ -30,6 +32,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "mocha": "^7.1.2",
     "nyc": "^15.0.0",
+    "save": "^2.4.0",
     "semantic-release": "^17.0.2",
     "sinon": "^8.1.1",
     "standard": "^14.3.1"
