@@ -11,7 +11,7 @@ let _this
 
 class JwtBchApi {
   /**
-   * @api JwtBchApi.constructor() constructor() - Instantiate the jwt-bch-api library.
+   * @api {function} JwtBchApi.constructor() constructor() - Instantiate the jwt-bch-api library.
    * @apiName JwtBchApi constructor
    * @apiGroup JwtBchApi
    * @apiDescription Instantiate the jwt-bch-api library. Expects an config object
@@ -55,7 +55,7 @@ class JwtBchApi {
   }
 
   /**
-   * @api JwtBchApi.register()  - Register with the JWT server.
+   * @api {function} JwtBchApi.register()  - Register with the JWT server.
    * @apiName JwtBchApi register
    * @apiGroup JwtBchApi
    * @apiDescription Register with the JWT server by logging in, populate the userData..
@@ -117,7 +117,7 @@ class JwtBchApi {
   }
 
   /**
-   * @api JwtBchApi.getApiToken()  - Request a new API token.
+   * @api {function} JwtBchApi.getApiToken()  - Request a new API token.
    * @apiName  JwtBchApi getApiToken
    * @apiGroup JwtBchApi
    * @apiDescription Request a new API token for the specified API access tier.
@@ -177,7 +177,7 @@ class JwtBchApi {
   }
 
   /**
-   * @api JwtBchApi.validateApiToken()  - Request a new API token.
+   * @api {function} JwtBchApi.validateApiToken()  - Request a new API token.
    * @apiName  JwtBchApi getApiToken
    * @apiGroup JwtBchApi
    * @apiDescription  Ask the Auth server to validate the API token and determine if it's still
@@ -229,7 +229,7 @@ class JwtBchApi {
   }
 
   /**
-   * @api JwtBchApi.getBchAddr()  - Return the BCH address.
+   * @api {function} JwtBchApi.getBchAddr()  - Return the BCH address.
    * @apiName  JwtBchApi getBchAddr
    * @apiGroup JwtBchApi
    * @apiDescription Return the BCH address associated with the registered user.
@@ -258,7 +258,7 @@ class JwtBchApi {
   }
 
   /**
-   * @api JwtBchApi.updateCredit()  - Update credit.
+   * @api {function} JwtBchApi.updateCredit()  - Update credit.
    * @apiName  JwtBchApi updateCredit
    * @apiGroup JwtBchApi
    * @apiDescription Ask the server to check the assigned BCH address and update credit..
