@@ -10,7 +10,8 @@
     "test:integration": "npm run lint && mocha --timeout 25000 test/integration/",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coverage:report": "nyc --reporter=html mocha --timeout 15000 test/unit/",
-    "docs": "./node_modules/.bin/apidoc -i src/ -o docs-out && rm -R docs && mkdir docs && apidoc-markdown -p docs-out -o docs/APIDOC.md && rm -R docs-out"
+    "docs:md": "./node_modules/.bin/apidoc -i src/ -o docs-out && rm -R docs && mkdir docs && apidoc-markdown -p docs-out -o docs/APIDOC.md && rm -R docs-out",
+    "docs": "./node_modules/.bin/apidoc -i src/ -o docs"
   },
   "author": "Chris Troutner <chris.troutner@gmail.com>",
   "license": "MIT",
