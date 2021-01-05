@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": "Permissionless-Software-Foundation/jwt-bch-lib",
   "dependencies": {
-    "axios": "^0.19.2"
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "-": "0.0.1",
