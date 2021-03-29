@@ -1,20 +1,20 @@
 # jwt-bch-lib
-An [npm library](https://www.npmjs.com/package/jwt-bch-lib) for interacting with jwt-bch-api used by fullstack.cash
+An [npm library](https://www.npmjs.com/package/jwt-bch-lib) for interacting with jwt-bch-api used by [FullStack.cash](https://fullstack.cash)
 
 ## Quick Links
 
-- [npm library](https://www.npmjs.com/package/jwt-bch-lib)
-- [jwt-bch-demo](https://github.com/Permissionless-Software-Foundation/jwt-bch-demo)
+- [npm library](https://www.npmjs.com/package/jwt-bch-lib) - this library.
+- [jwt-bch-demo](https://github.com/Permissionless-Software-Foundation/jwt-bch-demo) - a demo node.js app using this library.
 
 ## Install
 
-- Install the library: `npm install jwt-bch-lib`
+- Install the library: `npm install --save jwt-bch-lib`
 
 ## Usage
 
 - Instantiate the library in your code:
 
-```
+```javascript
 const JwtLib = require('jwt-bch-lib')
 const jwtLib = new JwtLib({
   // Overwrite default values with the psf credentials.
@@ -24,8 +24,10 @@ const jwtLib = new JwtLib({
 })
 
 ```
+
 - Get and Renew FullStack.cash JWT
-```
+
+```javascript
 // Get's a JWT token from FullStack.cash.
 async function getJWT(){
   try {
